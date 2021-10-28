@@ -1,6 +1,9 @@
 import React, { useState } from "react";
-import { Container, Form, Table } from "react-bootstrap";
+import { Col, Container, Form, Row, Table } from "react-bootstrap";
 
+import Info from "./components/Info";
+import FormSelectFilter from "./components/FormSelectFilter";
+import Result from "./components/Result";
 import getAzureResourceTypes from "./azureResourceTypes";
 
 /*
@@ -43,12 +46,8 @@ function App() {
     setInput({ ...input, environment: target.value });
   }
 
-  function setResourceType({ target }) {
-    setInput({ ...input, resourceType: target.value });
-  }
-
-  function onChangeResourceFilter({ target }) {
-    setResourceFilter(target.value);
+  function setResourceType(value) {
+    setInput({ ...input, resourceType: value });
   }
 
   /**
@@ -99,101 +98,119 @@ function App() {
       ? formatResourceType(input.resourceType)
       : "";
 
-  const filteredResourceTypes = getAzureResourceTypes().filter(
-    (resourceType) =>
-      resourceType.abbr.toLowerCase().includes(resourceFilter) ||
-      resourceType.type.toLowerCase().includes(resourceFilter) ||
-      resourceType.ns.toLowerCase().includes(resourceFilter)
-  );
-
   return (
-    <Container>
-      <header>
-        <h1>Azure Resource Naming Convention</h1>
-        <p>
-          This is a tool to help you name your Azure Resources. It follows the
-          naming convention of Klabbet, which is described in full in this
-          article.
-        </p>
-      </header>
-      <main>
-        <Form>
-          <Form.Group>
-            <Form.Label>Project Name</Form.Label>
-            <span>Example: Corporate Bank</span>
-            <Form.Control
-              required
-              type="text"
-              value={input.projectName}
-              onChange={setProjectName}
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Component Name (optional)</Form.Label>
-            <span>Example: Web</span>
-            <Form.Control
-              type="text"
-              value={input.componentName}
-              onChange={setComponentName}
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Environment</Form.Label>
-            <Form.Select value={input.environment} onChange={setEnvironment}>
-              {environments.map((env) => (
-                <option key={env.abbr} value={env.abbr}>
-                  {env.name}
-                </option>
-              ))}
-            </Form.Select>
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Azure Resource</Form.Label>
-            <Form.Control
-              type="search"
-              value={resourceFilter}
-              onChange={onChangeResourceFilter}
-            />
-            <Form.Select value={input.resourceType} onChange={setResourceType}>
-              {filteredResourceTypes.map((resource) => (
-                <option key={resource.abbr} value={resource.abbr}>
-                  {resource.type}
-                </option>
-              ))}
-            </Form.Select>
-          </Form.Group>
-        </Form>
-        <div>
-          <h1>The Name of your Resource</h1>
-          <h2>{resourceName}</h2>
-          <span>[copy]</span>
+    <Row className="h-100">
+      <Col lg={true} className="bg-primary bg-gradient text-white">
+        <div className="d-flex flex-column justify-content-center align-items-center h-100 py-4">
+          <header className="w-75">
+            <h1 className="text-uppercase text-center font-monospace">
+              Azure Naming
+            </h1>
+            <p>
+              This tool will help you name Azure Resources. It follows a naming
+              convention that is described{" "}
+              <a className="text-white" href="#">
+                here
+              </a>
+              .
+            </p>
+          </header>
+          <main className="w-75">
+            <Form>
+              <Form.Group className="mb-2">
+                <Form.Label className="font-monospace">Project Name</Form.Label>
+                <Info title="Example" className="text-secondary">
+                  Corporate Bank
+                </Info>
+                <Form.Control
+                  required
+                  type="text"
+                  value={input.projectName}
+                  onChange={setProjectName}
+                  placeholder="Titanic"
+                />
+              </Form.Group>
+              <Form.Group className="mb-2">
+                <Form.Label className="font-monospace">
+                  Component Name
+                </Form.Label>
+                <Info title="Example">Web</Info>
+                <Form.Control
+                  type="text"
+                  value={input.componentName}
+                  onChange={setComponentName}
+                  placeholder="Web"
+                />
+              </Form.Group>
+              <Form.Group className="mb-2">
+                <Form.Label className="font-monospace">Environment</Form.Label>
+                <Info title="Example">Web</Info>
+                <Form.Select
+                  value={input.environment}
+                  onChange={setEnvironment}
+                >
+                  {environments.map((env) => (
+                    <option key={env.abbr} value={env.abbr}>
+                      {env.name}
+                    </option>
+                  ))}
+                </Form.Select>
+              </Form.Group>
+              <Form.Group className="mb-2">
+                <Form.Label className="font-monospace">
+                  Azure Resource
+                </Form.Label>
+                <Info title="Example">Web</Info>
+                <FormSelectFilter
+                  options={getAzureResourceTypes().map(({ abbr, type }) => ({
+                    value: abbr,
+                    text: type,
+                  }))}
+                  onChange={setResourceType}
+                />
+              </Form.Group>
+            </Form>
+          </main>
         </div>
-        <h1>Tags</h1>
-        <p>Add the following tags to your resource.</p>
-        <Table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Value</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th>Project</th>
-              <td>{input.projectName}</td>
-            </tr>
-            <tr>
-              <th>Component</th>
-              <td>{input.componentName}</td>
-            </tr>
-            <tr>
-              <th>Environment</th>
-              <td>{findEnvironmentName(input.environment)}</td>
-            </tr>
-          </tbody>
-        </Table>
-      </main>
-    </Container>
+      </Col>
+      <Col lg={true}>
+        <div className="d-flex flex-column justify-content-center align-items-center h-100 py-4">
+          <div className="w-75 mb-4">
+            <h2 className="text-uppercase text-center text-muted">
+              Computed Name
+            </h2>
+            <Result resourceName={resourceName} />
+          </div>
+          <div className="w-75">
+            <h2 className="text-uppercase text-center text-muted">
+              Resource Tags
+            </h2>
+            <Table bordered>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>Project</th>
+                  <td>{input.projectName}</td>
+                </tr>
+                <tr>
+                  <th>Component</th>
+                  <td>{input.componentName}</td>
+                </tr>
+                <tr>
+                  <th>Environment</th>
+                  <td>{findEnvironmentName(input.environment)}</td>
+                </tr>
+              </tbody>
+            </Table>
+          </div>
+        </div>
+      </Col>
+    </Row>
   );
 }
 

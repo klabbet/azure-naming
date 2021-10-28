@@ -1,0 +1,80 @@
+@font-face {
+  font-family: "Fira Sans SemiBold";
+  src: url("../../fonts/Fira_Sans/FiraSans-SemiBold.ttf");
+  font-display: fallback;
+}
+
+@font-face {
+  font-family: "Cormorant Regular";
+  src: url("../../fonts/Cormorant/Cormorant-Regular.ttf");
+  font-display: fallback;
+}
+
+@font-face {
+  font-family: "Fira Sans Regular";
+  src: url("../../fonts/Fira_Sans/FiraSans-Regular.ttf");
+  font-display: fallback;
+}
+// colors
+$body-color: rgb(17, 24, 39);
+$blue: #312e81;
+$indigo: rgb(55, 48, 163);
+$teal: rgb(109, 40, 217);
+$secondary: $indigo;
+$info: $teal;
+$link-color: $info;
+
+// fonts
+$font-family-sans-serif: "Cormorant Regular";
+$font-family-monospace: "Fira Sans SemiBold";
+$font-family-regular: "Fira Sans Regular";
+$font-size-base: 1.5rem;
+
+@import "~bootstrap/scss/bootstrap";
+
+html,
+body,
+#root {
+  height: 100%;
+  font-family: $font-family-regular;
+  overflow: hidden;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.hover-primary {
+  &:hover {
+    background-color: $primary;
+    color: $white;
+  }
+}
+
+.font-serif {
+  font-family: $font-family-sans-serif;
+}
+
+.font-regular {
+  font-family: $font-family-regular;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $font-family-monospace;
+}
+
+p,
+span,
+a {
+  font-family: $font-family-sans-serif;
+}
+
+select,
+option {
+  font-family: $font-family-regular;
+}
