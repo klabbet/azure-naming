@@ -3,8 +3,6 @@ import React, { useState } from "react";
 import { Form, Collapse } from "react-bootstrap";
 
 function Option({ value, text, onClick }) {
-  const [isActive, setIsActive] = useState(false);
-
   function onClickHandler() {
     console.log("onClickHandler", value, text);
     onClick && onClick({ value, text });
@@ -14,8 +12,6 @@ function Option({ value, text, onClick }) {
     <li
       className={`border border-top-0 border-muted px-2 cursor-pointer hover-primary`}
       style={{ listStyleType: "none", lineHeight: "3rem" }}
-      onMouseEnter={() => setIsActive(true)}
-      onMouseLeave={() => setIsActive(false)}
       onClick={onClickHandler}
     >
       {text}

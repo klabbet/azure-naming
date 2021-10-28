@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Col, Container, Form, Row, Table } from "react-bootstrap";
+import { Col, Form, Row, Table } from "react-bootstrap";
 
 import Info from "./components/Info";
 import FormSelectFilter from "./components/FormSelectFilter";
@@ -32,7 +32,6 @@ function App() {
     environment: "dev",
     resourceType: "",
   });
-  const [resourceFilter, setResourceFilter] = useState("");
 
   function setProjectName({ target }) {
     setInput({ ...input, projectName: target.value });
@@ -109,7 +108,7 @@ function App() {
             <p>
               This tool will help you name Azure Resources. It follows a naming
               convention that is described{" "}
-              <a className="text-white" href="#">
+              <a className="text-white" href="/">
                 here
               </a>
               .
