@@ -10,7 +10,7 @@ function Option({ value, text, onClick }) {
 
   return (
     <li
-      className={`border border-top-0 border-muted px-2 cursor-pointer hover-primary`}
+      className={`border border-top-0 border-muted px-2 cursor-pointer bg-white text-dark hover-primary`}
       style={{ listStyleType: "none", lineHeight: "3rem" }}
       onClick={onClickHandler}
     >

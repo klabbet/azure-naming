@@ -37,7 +37,10 @@ body,
 #root {
   height: 100%;
   font-family: $font-family-regular;
-  overflow: hidden;
+
+  @include media-breakpoint-up(lg) {
+    overflow: hidden;
+  }
 }
 
 .cursor-pointer {
@@ -46,8 +49,8 @@ body,
 
 .hover-primary {
   &:hover {
-    background-color: $primary;
-    color: $white;
+    background-color: $primary !important;
+    color: $white !important;
   }
 }
 

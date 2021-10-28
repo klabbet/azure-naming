@@ -1,13 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
+
+function CopyButton({ resourceName }) {
+  const [isClicked, setIsClicked] = useState(false);
+
+  function copyToClipboard() {
+    setIsClicked(true);
+    navigator.clipboard.writeText(resourceName);
+    setTimeout(() => setIsClicked(false), 1500);
+  }
+
+  if (isClicked) {
+    return <span className="font-regular fst-normal">Copied</span>;
+  } else {
+    return (
+      <Button
+        disabled={resourceName === ""}
+        size="sm"
+        variant="link"
+        className="font-regular"
+        onClick={copyToClipboard}
+        resourceName={resourceName}
+      >
+        Copy
+      </Button>
+    );
+  }
+}
 
 function Result({ resourceName }) {
   const isActive = resourceName && resourceName !== "";
   const inactiveClassname = isActive ? "" : "font-serif fst-italic text-muted";
   const activeBorder = isActive ? "border-success border-2" : "";
-  function copyToClipboard() {
-    navigator.clipboard.writeText(resourceName);
-  }
 
   return (
     <div
@@ -15,14 +39,7 @@ function Result({ resourceName }) {
       style={{ lineHeight: "3rem" }}
     >
       {resourceName || "Enter details to the left"}
-      <Button
-        size="sm"
-        variant="link"
-        className="font-regular"
-        onClick={copyToClipboard}
-      >
-        Copy
-      </Button>
+      <CopyButton resourceName={resourceName} />
     </div>
   );
 }
