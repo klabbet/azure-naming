@@ -5,8 +5,8 @@
 const fs = require("fs");
 const parse = require("csv-parse");
 
-const input = "./src/azure-resource-types.csv";
-const output = "./src/azure-resource-types.json";
+const input = "./src/lib/azure-resource-types.csv";
+const output = "./src/lib/azure-resource-types.json";
 
 // read input
 fs.readFile(input, "utf-8", (err, data) => {

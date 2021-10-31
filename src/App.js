@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { Col, Form, Row, Table } from "react-bootstrap";
+import { Col, Row, Table } from "react-bootstrap";
 
-import Info from "./components/Info";
-import FormSelectFilter from "./components/FormSelectFilter";
 import Result from "./components/Result";
-import getAzureResourceTypes from "./azureResourceTypes";
+import InputForm from "./components/InputForm";
+import environments from "./lib/environments";
 
 /*
  * Expressions
@@ -12,13 +11,6 @@ import getAzureResourceTypes from "./azureResourceTypes";
 
 const whitespace = /\s/g;
 const notAnsi = /[^a-z0-9-]/g;
-
-const environments = [
-  { abbr: "dev", name: "Development" },
-  { abbr: "test", name: "Test" },
-  { abbr: "stage", name: "Staging" },
-  { abbr: "prod", name: "Production" },
-];
 
 function findEnvironmentName(abbr) {
   const environment = environments.find((env) => env.abbr === abbr);
@@ -33,20 +25,8 @@ function App() {
     resourceType: "",
   });
 
-  function setProjectName({ target }) {
-    setInput({ ...input, projectName: target.value });
-  }
-
-  function setComponentName({ target }) {
-    setInput({ ...input, componentName: target.value });
-  }
-
-  function setEnvironment({ target }) {
-    setInput({ ...input, environment: target.value });
-  }
-
-  function setResourceType(value) {
-    setInput({ ...input, resourceType: value });
+  function onFormChange(input) {
+    setInput(input);
   }
 
   /**
@@ -115,60 +95,7 @@ function App() {
             </p>
           </header>
           <main className="w-75">
-            <Form>
-              <Form.Group className="mb-2">
-                <Form.Label className="font-monospace">Project Name</Form.Label>
-                <Info title="Example" className="text-secondary">
-                  Corporate Bank
-                </Info>
-                <Form.Control
-                  required
-                  type="text"
-                  value={input.projectName}
-                  onChange={setProjectName}
-                  placeholder="Titanic"
-                />
-              </Form.Group>
-              <Form.Group className="mb-2">
-                <Form.Label className="font-monospace">
-                  Component Name
-                </Form.Label>
-                <Info title="Example">Web</Info>
-                <Form.Control
-                  type="text"
-                  value={input.componentName}
-                  onChange={setComponentName}
-                  placeholder="Web"
-                />
-              </Form.Group>
-              <Form.Group className="mb-2">
-                <Form.Label className="font-monospace">Environment</Form.Label>
-                <Info title="Example">Web</Info>
-                <Form.Select
-                  value={input.environment}
-                  onChange={setEnvironment}
-                >
-                  {environments.map((env) => (
-                    <option key={env.abbr} value={env.abbr}>
-                      {env.name}
-                    </option>
-                  ))}
-                </Form.Select>
-              </Form.Group>
-              <Form.Group className="mb-2">
-                <Form.Label className="font-monospace">
-                  Azure Resource
-                </Form.Label>
-                <Info title="Example">Web</Info>
-                <FormSelectFilter
-                  options={getAzureResourceTypes().map(({ abbr, type }) => ({
-                    value: abbr,
-                    text: type,
-                  }))}
-                  onChange={setResourceType}
-                />
-              </Form.Group>
-            </Form>
+            <InputForm input={input} onChange={onFormChange} />
           </main>
         </div>
       </Col>
