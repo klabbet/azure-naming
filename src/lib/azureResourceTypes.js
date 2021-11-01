@@ -20,7 +20,23 @@ azureResourceTypes.sort((resource1, resource2) => {
 });
 
 function getAzureResourceTypes() {
-  return azureResourceTypes.map(([type, ns, abbr]) => ({ type, ns, abbr }));
+  return azureResourceTypes.map(
+    ([type, ns, abbr, transformer, ...validations]) => ({
+      type,
+      ns,
+      abbr,
+      transformer,
+      validations,
+    })
+  );
+}
+
+export function findTransformerName(abbr) {
+  const azureResourceTypes = getAzureResourceTypes();
+  const resource = azureResourceTypes.find(
+    (resource) => resource.abbr === abbr
+  );
+  return resource ? resource.transformer : null;
 }
 
 export default getAzureResourceTypes;

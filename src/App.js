@@ -3,19 +3,9 @@ import { Col, Row, Table } from "react-bootstrap";
 
 import Result from "./components/Result";
 import InputForm from "./components/InputForm";
-import environments from "./lib/environments";
-
-/*
- * Expressions
- */
-
-const whitespace = /\s/g;
-const notAnsi = /[^a-z0-9-]/g;
-
-function findEnvironmentName(abbr) {
-  const environment = environments.find((env) => env.abbr === abbr);
-  return environment ? environment.name : "";
-}
+import { findEnvironmentName } from "./lib/environments";
+import transformer from "./lib/transformer";
+import { findTransformerName } from "./lib/azureResourceTypes";
 
 function App() {
   const [input, setInput] = useState({
@@ -29,53 +19,13 @@ function App() {
     setInput(input);
   }
 
-  /**
-   * Format project name
-   * 1. Lower case
-   * 2. Replace whitespace with string
-   * 3. Remove non a-z 0-9 characters
-   * @param {string} str - Input string to transform
-   * @returns {string} A string that matches the project name format
-   */
-  function formatProjectName(str) {
-    return str.toLowerCase().replace(whitespace, "-").replace(notAnsi, "");
-  }
-
-  /**
-   * Format component name
-   * 1. Lower case
-   * 2. Replace whitespace with string
-   * 3. Remove non a-z 0-9 characters
-   * @param {string} str - Input string to transform
-   * @returns {string} A string that matches the project name format
-   */
-  function formatComponentName(str) {
-    return (
-      "-" + str.toLowerCase().replace(whitespace, "-").replace(notAnsi, "")
+  let resourceName = "";
+  if (input.projectName) {
+    resourceName = transformer(
+      findTransformerName(input.resourceType) ?? "alphanumericsHyphens",
+      `${input.projectName} ${input.componentName} ${input.environment} ${input.resourceType}`
     );
   }
-
-  function formatEnvironment(str) {
-    return "-" + str.toLowerCase();
-  }
-
-  function formatResourceType(str) {
-    return "-" + str.toLowerCase();
-  }
-
-  let resourceName = "";
-  resourceName += `${formatProjectName(input.projectName)}`;
-  resourceName += input.componentName
-    ? `${formatComponentName(input.componentName)}`
-    : "";
-  resourceName +=
-    resourceName && input.environment
-      ? formatEnvironment(input.environment)
-      : "";
-  resourceName +=
-    resourceName && input.resourceType
-      ? formatResourceType(input.resourceType)
-      : "";
 
   return (
     <Row className="h-100">
