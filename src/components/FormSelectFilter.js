@@ -4,7 +4,6 @@ import { Form, Collapse } from "react-bootstrap";
 
 function Option({ value, text, onClick }) {
   function onClickHandler() {
-    console.log("onClickHandler", value, text);
     onClick && onClick({ value, text });
   }
 
@@ -28,7 +27,6 @@ function FormSelectFilter({ options = [], currentValue, onChange }) {
   }
 
   function onOptionClick({ value, text }) {
-    console.log("onOptionClick", value, text);
     setFilter(text);
     onChange && onChange(value);
   }

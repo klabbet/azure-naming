@@ -20,7 +20,7 @@ function Info({ title, children, className }) {
       <Button
         variant="link"
         className={`text-sm text-white font-serif h-100 ${className}`}
-        tabindex="-1"
+        tabIndex="-1"
       >
         help
       </Button>

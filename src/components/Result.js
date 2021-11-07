@@ -20,7 +20,6 @@ function CopyButton({ resourceName }) {
         variant="link"
         className="font-regular"
         onClick={copyToClipboard}
-        resourceName={resourceName}
       >
         Copy
       </Button>
