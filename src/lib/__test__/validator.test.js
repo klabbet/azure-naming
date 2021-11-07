@@ -1,4 +1,12 @@
-import { startWithLetter, startWithAlphanumeric } from "../validator";
+import {
+  startWithLetter,
+  startWithAlphanumeric,
+  atLeast2Labels,
+  endWithAlphanumericOrUnderscore,
+  endWithAlphanumeric,
+  maxLengthValidator,
+  minLengthValidator,
+} from "../validator";
 
 describe("validator", () => {
   describe("startWithLetter", () => {
@@ -48,6 +56,152 @@ describe("validator", () => {
       // assert
       expect(result).not.toBe(true);
       expect(result.validatorName).toBe("startWithAlphanumeric");
+    });
+  });
+
+  describe("atLeast2Labels", () => {
+    it("should be valid when resource name has two labels separated by a dot", () => {
+      // arrange
+      const resourceName = "klabbet.web.prod.dnsz";
+
+      // act
+      const result = atLeast2Labels(resourceName);
+
+      // assert
+      expect(result).toBe(true);
+    });
+
+    it("should be invalid when resource name has only one label", () => {
+      // arrange
+      const resourceName = "localhost";
+
+      // act
+      const result = atLeast2Labels(resourceName);
+
+      // assert
+      expect(result).not.toBe(true);
+      expect(result.validatorName).toBe("atLeast2Labels");
+    });
+  });
+
+  describe("endWithAlphanumericOrUnderscore", () => {
+    it("should be valid when resource name ends with underscore", () => {
+      // arrange
+      const resourceName = "AzureServiceEscapePlan_";
+
+      // act
+      const result = endWithAlphanumericOrUnderscore(resourceName);
+
+      // assert
+      expect(result).toBe(true);
+    });
+
+    it("should be invalid when resource name ends with a period", () => {
+      // arrange
+      const resourceName = "AzureServiceEscapePlan.";
+
+      // act
+      const result = endWithAlphanumericOrUnderscore(resourceName);
+
+      // assert
+      expect(result).not.toBe(true);
+      expect(result.validatorName).toBe("endWithAlphanumericOrUnderscore");
+    });
+  });
+
+  describe("endWithAlphanumeric", () => {
+    it("should be valid when resource name ends with number", () => {
+      // arrange
+      const resourceName = "AzureServiceEscapePlan1";
+
+      // act
+      const result = endWithAlphanumeric(resourceName);
+
+      // assert
+      expect(result).toBe(true);
+    });
+
+    it("should be invalid when resource name ends with an underscore", () => {
+      // arrange
+      const resourceName = "AzureServiceEscapePlan_";
+
+      // act
+      const result = endWithAlphanumeric(resourceName);
+
+      // assert
+      expect(result).not.toBe(true);
+      expect(result.validatorName).toBe("endWithAlphanumeric");
+    });
+  });
+
+  describe("maxLength", () => {
+    it("should be valid when resource name is within maxLength", () => {
+      // arrange
+      const resourceName = "klabbet-web-stage-appi";
+
+      // act
+      const result = maxLengthValidator(63)(resourceName);
+
+      // assert
+      expect(result).toBe(true);
+    });
+
+    it("should be valid when resource name is exactly maxLength", () => {
+      // arrange
+      const resourceName = "klabbet-web-stage-ase";
+
+      // act
+      const result = maxLengthValidator(resourceName.length)(resourceName);
+
+      // assert
+      expect(result).toBe(true);
+    });
+
+    it("should be invalid when resource name is exceeding maxLength", () => {
+      // arrange
+      const resourceName = "klabbet-web-stage-app-";
+
+      // act
+      const result = maxLengthValidator(15)(resourceName);
+
+      // assert
+      expect(result).not.toBe(true);
+      expect(result.validatorName).toBe("15characterLimit");
+    });
+  });
+
+  describe("minLength", () => {
+    it("should be valid when resource name is longer than min length", () => {
+      // arrange
+      const resourceName = "klabbet-web-stage-app";
+
+      // act
+      const result = minLengthValidator(5)(resourceName);
+
+      // assert
+      expect(result).toBe(true);
+    });
+
+    it("should be valid when resource name is exactly at min length", () => {
+      // arrange
+      const resourceName = "klabbet-web-stage-app";
+
+      // act
+      const result = minLengthValidator(resourceName.length)(resourceName);
+
+      // assert
+      expect(result).toBe(true);
+    });
+
+    it("should be invalid when resource name is shorter than min length", () => {
+      // arrange
+      const resourceName = "web";
+
+      // act
+      const result = minLengthValidator(5)(resourceName);
+
+      expect(result).not.toBe(true);
+      expect(result.validatorName).toBe("atLeast5Characters");
     });
   });
 });

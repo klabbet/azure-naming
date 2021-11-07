@@ -54,13 +54,22 @@ function alphanumericsUnderscoresPeriodsHyphens(str) {
   return str.replace(/[^a-zA-Z0-9_.-]/g, "");
 }
 
+/**
+ * Transform into labels with alphanumerics, underscores and hyphens
+ * @param {string} str The string to transform.
+ * @returns {string} A string of labels, with all non-alphanumeric characters removed.
+ */
+function labelsAlphanumericsUnderscoresHyphens(str) {
+  return alphanumericsUnderscoresHyphens(str).replaceAll("-", ".");
+}
+
 const transformers = {
-  alphanumerics: alphanumerics,
-  alphanumericsHyphens: alphanumericsHyphens,
-  alphanumericsUnderscores: alphanumericsUnderscores,
-  alphanumericsUnderscoresHyphens: alphanumericsUnderscoresHyphens,
-  alphanumericsUnderscoresPeriodsHyphens:
-    alphanumericsUnderscoresPeriodsHyphens,
+  alphanumerics,
+  alphanumericsHyphens,
+  alphanumericsUnderscores,
+  alphanumericsUnderscoresHyphens,
+  alphanumericsUnderscoresPeriodsHyphens,
+  labelsAlphanumericsUnderscoresHyphens,
 };
 
 /**
