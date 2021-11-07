@@ -182,7 +182,6 @@ const characterReplacementMap = {
   "\u0176": "Y",
   "\u0177": "y",
   "\u0178": "Y",
-
   "\u0179": "Z",
   "\u017A": "z",
   "\u017B": "Z",
@@ -291,7 +290,6 @@ const characterReplacementMap = {
   "\u01E2": "W",
   "\u01E3": "Y",
   "\u01E4": "Y",
-
   "\u01E5": "Y",
   "\u01E6": "Z",
   "\u01E7": "Z",
@@ -368,7 +366,6 @@ const characterReplacementMap = {
   "\u022E": "O",
   "\u022F": "o",
   "\u0230": "O",
-
   "\u0231": "o",
   "\u0232": "Y",
   "\u0233": "y",

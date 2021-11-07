@@ -23,4 +23,4 @@ yarn-debug.log*
 yarn-error.log*
 
 # this file is generated on build
-src/lib/azure-resource-types.json 
+src/lib/azure-resource-types.json

@@ -2,10 +2,13 @@
  * The source for these abbreviations is here.
  * https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-abbreviations
  *
- * Copy  the tables into Excel. Clean up the unwanted rows.
- * Save the table as csv and clean the abbreviation column from unwanted dashes.
+ * The validation rules for each resource type is here.
+ * https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/resource-name-rules
  *
- * Last update: 2021-10-14
+ * Copy the tables into Excel. Clean up the unwanted rows.
+ * Save the table as csv and clean the abbreviation column from unwanted dashes.
+ * Add transformation and validations accordingly.
+ *
  */
 
 import azureResourceTypes from "./azure-resource-types.json";
@@ -31,12 +34,30 @@ function getAzureResourceTypes() {
   );
 }
 
+/**
+ * Find the transformation for the given resource type.
+ * @param {string} abbr - The abbreviation of the resource type.
+ * @returns {string} The transformation for the given resource type.
+ */
 export function findTransformerName(abbr) {
   const azureResourceTypes = getAzureResourceTypes();
   const resource = azureResourceTypes.find(
     (resource) => resource.abbr === abbr
   );
   return resource ? resource.transformer : null;
+}
+
+/**
+ * Find the validations for the given resource type.
+ * @param {string} abbr - The abbreviation of the resource type.
+ * @returns {string[]} The validations for the given resource type.
+ */
+export function findValidations(abbr) {
+  const azureResourceTypes = getAzureResourceTypes();
+  const resource = azureResourceTypes.find(
+    (resource) => resource.abbr === abbr
+  );
+  return resource ? resource.validations : null;
 }
 
 export default getAzureResourceTypes;
