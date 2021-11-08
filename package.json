@@ -16,7 +16,8 @@
     "start": "npm run prebuild && react-scripts start",
     "build": "npm run prebuild && react-scripts build",
     "test": "npm run prebuild && react-scripts test",
-    "prebuild": "node ./scripts/build-azure-resource-types.js"
+    "prebuild": "node ./scripts/build-azure-resource-types.js",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
@@ -45,7 +46,13 @@
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^1.7.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^11.2.6",
     "node-sass": "^6.0.1",
     "prettier": "2.4.1"
+  },
+  "lint-staged": {
+    "**/*.js": "eslint --fix",
+    "**/*": "prettier --write --ignore-unknown"
   }
 }
