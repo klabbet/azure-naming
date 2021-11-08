@@ -26,7 +26,7 @@ function InputForm({ input, onChange }) {
   return (
     <Form>
       <Form.Group className="mb-2">
-        <Form.Label className="font-monospace">Azure Resource</Form.Label>
+        <Form.Label className="font-monospace">Azure Resource*</Form.Label>
         <Info title="Example">Web</Info>
         <FormSelectFilter
           options={getAzureResourceTypes().map(({ abbr, type }) => ({
@@ -37,7 +37,7 @@ function InputForm({ input, onChange }) {
         />
       </Form.Group>
       <Form.Group className="mb-2">
-        <Form.Label className="font-monospace">Project Name</Form.Label>
+        <Form.Label className="font-monospace">Project Name*</Form.Label>
         <Info title="Example" className="text-secondary">
           Corporate Bank
         </Info>

@@ -6,6 +6,7 @@ import InputForm from "./components/InputForm";
 import { findEnvironmentName } from "./lib/environments";
 import transformer from "./lib/transformer";
 import { findTransformerName } from "./lib/azureResourceTypes";
+import validate from "./lib/validator";
 
 function App() {
   const [input, setInput] = useState({
@@ -19,12 +20,19 @@ function App() {
     setInput(input);
   }
 
+  // try to transform the input to a resource name
   let resourceName = "";
   if (input.projectName) {
     resourceName = transformer(
       findTransformerName(input.resourceType) ?? "alphanumericsHyphens",
       `${input.projectName} ${input.componentName} ${input.environment} ${input.resourceType}`
     );
+  }
+
+  // if there is a resource name, validate it
+  let validationResult = true;
+  if (resourceName && input.resourceType) {
+    validationResult = validate(resourceName, input.resourceType);
   }
 
   return (
@@ -45,7 +53,11 @@ function App() {
             </p>
           </header>
           <main className="w-75">
-            <InputForm input={input} onChange={onFormChange} />
+            <InputForm
+              input={input}
+              onChange={onFormChange}
+              validationResult={validationResult}
+            />
           </main>
         </div>
       </Col>
@@ -55,7 +67,10 @@ function App() {
             <h2 className="text-uppercase text-center text-muted">
               Computed Name
             </h2>
-            <Result resourceName={resourceName} />
+            <Result
+              resourceName={resourceName}
+              validationResult={validationResult}
+            />
           </div>
           <div className="w-75">
             <h2 className="text-uppercase text-center text-muted">

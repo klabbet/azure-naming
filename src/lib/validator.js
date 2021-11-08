@@ -147,7 +147,13 @@ const validators = {
   atLeast6Characters: minLengthValidator(6),
 };
 
-function validate(resourceName, resourceType) {
+/**
+ * Validate resource name of the specific resource type
+ * @param {string} resourceName - The resource name after it has been transformed
+ * @param {string} resourceType - The resource type whose naming rules we validate with
+ * @returns {ValidationResult|boolean} - Validation result if invalid, otherwise true
+ */
+export default function validate(resourceName, resourceType) {
   const validations = findValidations(resourceType);
 
   // for all validations on the resource type

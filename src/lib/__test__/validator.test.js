@@ -1,4 +1,4 @@
-import {
+import validate, {
   startWithLetter,
   startWithAlphanumeric,
   atLeast2Labels,
@@ -202,6 +202,78 @@ describe("validator", () => {
 
       expect(result).not.toBe(true);
       expect(result.validatorName).toBe("atLeast5Characters");
+    });
+  });
+
+  describe("validate", () => {
+    it("should be valid when web app has less than 60 characters", () => {
+      // arrange
+      const resourceName = "klabbet-web-stage-app";
+
+      // act
+      const result = validate(resourceName, "app");
+
+      // assert
+      expect(result).toBe(true);
+    });
+
+    it("should be invalid when web app has more than 60 characters", () => {
+      // arrange
+      const resourceName =
+        "klabbet-web-web-web-web-web-web-web-web-web-web-web-web-web-web-web-web-web-web-web-web-web-web-web-web-web-web-web-web-web-web-web-web-web-web-web-web-stage-app";
+
+      // act
+      const result = validate(resourceName, "app");
+
+      // assert
+      expect(result).not.toBe(true);
+      expect(result.validatorName).toBe("60characterLimit");
+    });
+
+    it("should be valid when web app has more than 2 characters", () => {
+      // arrange
+      const resourceName = "web";
+
+      // act
+      const result = validate(resourceName, "app");
+
+      // assert
+      expect(result).toBe(true);
+    });
+
+    it("should be invalid when web app has less than 2 characters", () => {
+      // arrange
+      const resourceName = "w";
+
+      // act
+      const result = validate(resourceName, "app");
+
+      // assert
+      expect(result).not.toBe(true);
+      expect(result.validatorName).toBe("atLeast2Characters");
+    });
+
+    it("should be valid when dns as at least 2 labels", () => {
+      // arrange
+      const resourceName = "klabbet.web.prod.dnsz";
+
+      // act
+      const result = validate(resourceName, "dnsz");
+
+      // assert
+      expect(result).toBe(true);
+    });
+
+    it("should be invalid when dns has only 1 label", () => {
+      // arrange
+      const resourceName = "localhost";
+
+      // act
+      const result = validate(resourceName, "dnsz");
+
+      // assert
+      expect(result).not.toBe(true);
+      expect(result.validatorName).toBe("atLeast2Labels");
     });
   });
 });
