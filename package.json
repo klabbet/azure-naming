@@ -14,7 +14,7 @@
   },
   "scripts": {
     "start": "npm run prebuild && react-scripts start",
-    "build": "prettier --check . && npm run prebuild && react-scripts build",
+    "build": "npm run prebuild && react-scripts build",
     "test": "npm run prebuild && react-scripts test",
     "prebuild": "node ./scripts/build-azure-resource-types.js",
     "prepare": "husky install",

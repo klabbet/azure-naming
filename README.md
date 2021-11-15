@@ -43,6 +43,6 @@ npm run build
 
 ## Contributing
 
-Adding, removing azure resources. Edit the `src/lib/azure-resource-types.csv` in your favorite spreadsheet editor, that can export to semicolon separated file.
+Adding, removing azure resources. Edit the `scripts/azure-resource-types.csv` in your favorite spreadsheet editor, that can export to semicolon separated file.
 
 For development conventions, please refer to [Klabbet Wiki](https://klabbet.atlassian.net/wiki).

@@ -24,3 +24,4 @@ yarn-error.log*
 
 # this file is generated on build
 src/lib/azure-resource-types.json
+src/react-app-env.d.ts
