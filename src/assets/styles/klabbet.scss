@@ -1,19 +1,23 @@
+/*
+ * Bootstrap theme overrides
+ */
+
 @font-face {
-  font-family: "Fira Sans SemiBold";
-  src: url("../../fonts/Fira_Sans/FiraSans-SemiBold.ttf");
-  font-display: fallback;
+    font-family: "Fira Sans SemiBold";
+    src: url("../fonts/Fira_Sans/FiraSans-SemiBold.ttf");
+    font-display: fallback;
 }
 
 @font-face {
-  font-family: "Cormorant Regular";
-  src: url("../../fonts/Cormorant/Cormorant-Regular.ttf");
-  font-display: fallback;
+    font-family: "Cormorant Regular";
+    src: url("../fonts/Cormorant/Cormorant-Regular.ttf");
+    font-display: fallback;
 }
 
 @font-face {
-  font-family: "Fira Sans Regular";
-  src: url("../../fonts/Fira_Sans/FiraSans-Regular.ttf");
-  font-display: fallback;
+    font-family: "Fira Sans Regular";
+    src: url("../fonts/Fira_Sans/FiraSans-Regular.ttf");
+    font-display: fallback;
 }
 // colors
 $body-color: rgb(17, 24, 39);
@@ -35,31 +39,31 @@ $font-size-base: 1.5rem;
 html,
 body,
 #root {
-  height: 100%;
-  font-family: $font-family-regular;
+    height: 100%;
+    font-family: $font-family-regular;
 
-  @include media-breakpoint-up(lg) {
-    overflow: hidden;
-  }
+    @include media-breakpoint-up(lg) {
+        overflow: hidden;
+    }
 }
 
 .cursor-pointer {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .hover-primary {
-  &:hover {
-    background-color: $primary !important;
-    color: $white !important;
-  }
+    &:hover {
+        background-color: $primary !important;
+        color: $white !important;
+    }
 }
 
 .font-serif {
-  font-family: $font-family-sans-serif;
+    font-family: $font-family-sans-serif;
 }
 
 .font-regular {
-  font-family: $font-family-regular;
+    font-family: $font-family-regular;
 }
 
 h1,
@@ -68,16 +72,16 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: $font-family-monospace;
+    font-family: $font-family-monospace;
 }
 
 p,
 span,
 a {
-  font-family: $font-family-sans-serif;
+    font-family: $font-family-sans-serif;
 }
 
 select,
 option {
-  font-family: $font-family-regular;
+    font-family: $font-family-regular;
 }

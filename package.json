@@ -2,11 +2,11 @@
   "name": "azure-resource-naming",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^11.2.7",
-    "@testing-library/user-event": "^12.8.3",
     "bootstrap": "^5.1.3",
+    "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-bootstrap": "^2.0.0",
     "react-dom": "^17.0.2",
@@ -14,16 +14,15 @@
   },
   "scripts": {
     "start": "npm run prebuild && react-scripts start",
-    "build": "npm run prebuild && react-scripts build",
+    "build": "prettier --check . && npm run prebuild && react-scripts build",
     "test": "npm run prebuild && react-scripts test",
     "prebuild": "node ./scripts/build-azure-resource-types.js",
-    "prepare": "husky install"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "prepare": "husky install",
+    "lint": "eslint 'src/**/*.js'",
+    "lint-fix": "npm run lint -- --fix",
+    "prettier": "prettier 'src/**/*.js'",
+    "prettier-fix": "npm run prettier -- --write --ignore-unknown ",
+    "ts-check": "tsc"
   },
   "browserslist": {
     "production": [
@@ -38,21 +37,27 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.8.3",
     "csv-parse": "^4.16.3",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^1.7.0",
     "husky": "^7.0.4",
     "lint-staged": "^11.2.6",
     "node-sass": "^6.0.1",
-    "prettier": "2.4.1"
+    "prettier": "2.4.1",
+    "typescript": "^4.4.4"
   },
   "lint-staged": {
-    "**/*.js": "eslint --fix",
-    "**/*": "prettier --write --ignore-unknown"
+    "src/**/*.js": [
+      "eslint --fix",
+      "prettier --write --ignore-unknown"
+    ]
   }
 }

@@ -1,11 +1,12 @@
 /**
- * React CSV from ../azure-resource-types.csv and output to ../azure-resource-types.js
+ * Read CSV from azure-resource-types.csv and output to azure-resource-types.js
+ * Please run this from root folder.
  */
 
-const fs = require("fs");
-const parse = require("csv-parse");
+import fs from "fs";
+import parse from "csv-parse";
 
-const input = "./src/lib/azure-resource-types.csv";
+const input = "./scripts/azure-resource-types.csv";
 const output = "./src/lib/azure-resource-types.json";
 
 // read input

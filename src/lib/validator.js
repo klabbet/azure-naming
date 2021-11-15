@@ -1,4 +1,8 @@
+// @ts-check
 import { findValidations } from "./azureResourceTypes";
+
+/** @typedef { import("../../@types/azure-resource-naming/lib/validator").ValidationResult} ValidationResult */
+/** @typedef { import("../../@types/azure-resource-naming/lib/validator").Validator} Validator */
 
 /**
  * Resource name must start with an alphanumeric character
@@ -8,6 +12,9 @@ import { findValidations } from "./azureResourceTypes";
 export function startWithAlphanumeric(resourceName) {
   // doesn't start with alphanumeric characters
   if (!/^[a-zA-Z0-9]/.test(resourceName)) {
+    /**
+     * @type {ValidationResult}
+     */
     return {
       validatorName: "startWithAlphanumeric",
       message: "Resource name must start with an alphanumeric character",
@@ -87,11 +94,11 @@ export function endWithAlphanumericOrUnderscore(resourceName) {
 
 /**
  * Create a validator for max length validation
- * @param {string} maxLength- Maximum length of the resource name
- * @returns {function} - A function that validates resource name against the max length
+ * @param {number} maxLength - Maximum length of the resource name
+ * @returns {Validator} - A function that validates resource name against the max length
  */
 export function maxLengthValidator(maxLength) {
-  return function (resourceName) {
+  return function validate(resourceName) {
     if (resourceName.length > maxLength) {
       return {
         validatorName: `${maxLength}characterLimit`,
@@ -105,11 +112,11 @@ export function maxLengthValidator(maxLength) {
 
 /**
  * Create a validator for min length validation
- * @param {string} minLength - Minimum length of the resource name
- * @returns {function} - A function that validates resource name against the ,om length
+ * @param {number} minLength - Minimum length of the resource name
+ * @returns {Validator} - A function that validates resource name against the min length
  */
 export function minLengthValidator(minLength) {
-  return function (resourceName) {
+  return function validate(resourceName) {
     if (resourceName.length < minLength) {
       return {
         validatorName: `atLeast${minLength}Characters`,
@@ -153,18 +160,18 @@ const validators = {
  * @param {string} resourceType - The resource type whose naming rules we validate with
  * @returns {ValidationResult|boolean} - Validation result if invalid, otherwise true
  */
-export default function validate(resourceName, resourceType) {
+export default function validator(resourceName, resourceType) {
   const validations = findValidations(resourceType);
 
   // for all validations on the resource type
-  for (let i = 0; i < validations.length; i++) {
+  for (let i = 0; i < validations.length; i += 1) {
     const validation = validations[i];
     // find a validator
-    const validator = validators[validation];
+    const validatorFn = validators[validation];
     // if validator exists
-    if (validator) {
+    if (validatorFn) {
       // validate the resource name
-      const validationResult = validator(resourceName);
+      const validationResult = validatorFn(resourceName);
       // if invalid
       if (validationResult !== true) {
         return validationResult;

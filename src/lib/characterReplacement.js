@@ -1,3 +1,6 @@
+// @ts-check
+// TODO Extract this to its own library
+
 const characterReplacementMap = {
   "\u00C0": "A",
   "\u00C1": "A",
@@ -425,8 +428,14 @@ const characterReplacementMap = {
   "\u0292": "f",
 };
 
-export default function replace(str) {
-  return str.replace(/[\u00C0-\u1FFF]/g, function (c) {
-    return characterReplacementMap[c] || c;
-  });
+/**
+ * Replace all non latin-1 characters in the string.
+ * @param {string} str - Input string with non latin-1 characters.
+ * @returns {string} - Output string without the non latin-1 characters.
+ */
+export default function replaceAll(str) {
+  return str.replace(
+    /[\u00C0-\u1FFF]/g,
+    (c) => characterReplacementMap[c] || c,
+  );
 }

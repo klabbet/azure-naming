@@ -1,4 +1,5 @@
-import characterReplacement from "./characterReplacement";
+// @ts-check
+import replaceAll from "./characterReplacement";
 
 /**
  * Allow alphanumerics.
@@ -60,7 +61,7 @@ function alphanumericsUnderscoresPeriodsHyphens(str) {
  * @returns {string} A string of labels, with all non-alphanumeric characters removed.
  */
 function labelsAlphanumericsUnderscoresHyphens(str) {
-  return alphanumericsUnderscoresHyphens(str).replaceAll("-", ".");
+  return alphanumericsUnderscoresHyphens(str).replace(/-/g, ".");
 }
 
 const transformers = {
@@ -74,20 +75,25 @@ const transformers = {
 
 /**
  * Apply transformer
- * @param {string} identifier - Name of the transformer
  * @param {string} str - The string to transform
+ * @param {string} [identifier] - Name of the transformer
  * @returns {string} - The transformed string
  */
-export default function transformer(identifier, str) {
+export default function transformer(str, identifier) {
   // lowercase the str
   // replace all whitespace with a dash
   let input = str.trim().toLowerCase().replace(/\s+/g, "-");
 
   // replace all special characters
-  input = characterReplacement(input);
+  input = replaceAll(input);
 
-  // find the transformer
+  // no transformer return it as it is
+  if (!identifier) {
+    return input;
+  }
+
   if (transformers[identifier]) {
+    // find the transformer
     return removeDuplicateHyphens(transformers[identifier](input));
   }
 

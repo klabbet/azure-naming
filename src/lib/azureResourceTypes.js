@@ -1,3 +1,4 @@
+// @ts-check
 /**
  * The source for these abbreviations is here.
  * https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-abbreviations
@@ -11,17 +12,28 @@
  *
  */
 
+/** @typedef { import("../../@types/azure-resource-naming/lib/azureResourceTypes").AzureResourceType} AzureResourceType */
+
+// @ts-ignore
 import azureResourceTypes from "./azure-resource-types.json";
+
+// sorting the array of resources
 azureResourceTypes.sort((resource1, resource2) => {
   if (resource1[0] < resource2[0]) {
     return -1;
-  } else if (resource1[0] > resource2[0]) {
-    return 1;
-  } else {
-    return 0;
   }
+
+  if (resource1[0] > resource2[0]) {
+    return 1;
+  }
+
+  return 0;
 });
 
+/**
+ * Read the input json and transform it into a resource type array
+ * @return {AzureResourceType[]} An array of azure resource types.
+ */
 function getAzureResourceTypes() {
   return azureResourceTypes.map(
     ([type, ns, abbr, transformer, ...validations]) => ({
@@ -30,7 +42,7 @@ function getAzureResourceTypes() {
       abbr,
       transformer,
       validations,
-    })
+    }),
   );
 }
 
@@ -40,10 +52,8 @@ function getAzureResourceTypes() {
  * @returns {string} The transformation for the given resource type.
  */
 export function findTransformerName(abbr) {
-  const azureResourceTypes = getAzureResourceTypes();
-  const resource = azureResourceTypes.find(
-    (resource) => resource.abbr === abbr
-  );
+  const data = getAzureResourceTypes();
+  const resource = data.find((item) => item.abbr === abbr);
   return resource ? resource.transformer : null;
 }
 
@@ -53,10 +63,8 @@ export function findTransformerName(abbr) {
  * @returns {string[]} The validations for the given resource type.
  */
 export function findValidations(abbr) {
-  const azureResourceTypes = getAzureResourceTypes();
-  const resource = azureResourceTypes.find(
-    (resource) => resource.abbr === abbr
-  );
+  const data = getAzureResourceTypes();
+  const resource = data.find((item) => item.abbr === abbr);
   return resource ? resource.validations : null;
 }
 
