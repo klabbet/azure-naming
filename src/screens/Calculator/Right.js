@@ -18,7 +18,7 @@ import TagTable from "./TagTable";
  */
 function Right({ azureResource }) {
   return (
-    <Col lg>
+    <Col lg className="position-relative">
       <div className="d-flex flex-column justify-content-center align-items-center h-100 py-4">
         <div className="w-75 mb-4">
           <h2 className="text-uppercase text-center text-muted">
@@ -38,6 +38,12 @@ function Right({ azureResource }) {
           </h2>
           <TagTable azureResource={azureResource} />
         </div>
+      </div>
+      <div className="position-absolute w-100 bottom-0 text-center">
+        <span>
+          Copyright &copy; {new Date().getFullYear()}{" "}
+          <a href="https://www.klabbet.com">Klabbet</a>
+        </span>
       </div>
     </Col>
   );
