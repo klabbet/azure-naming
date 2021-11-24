@@ -15,7 +15,7 @@ function ResourceGroup({ azureResource }) {
   const { projectName, componentName, environment } = azureResource;
 
   // transform the appropriate name for the resource group
-  let resourceGroup = "";
+  let resourceGroup = "\u00A0"; // none breaking space
   if (projectName) {
     resourceGroup = transformer(
       `${projectName} ${componentName} ${environment} rg`,
