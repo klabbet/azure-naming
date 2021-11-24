@@ -1,4 +1,5 @@
 import React from "react";
+// @ts-ignore
 import forkMeOnGithub from "../assets/images/fork-me.png";
 
 function ForkMeBanner() {
